@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad Española MXBikes - Inscripción a Carreras</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Definiendo las variables CSS que faltaban */
+            --primary-color: #dc2626;
+            --primary-hover: #b91c1c;
+            --secondary-color: #f59e0b;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-color: #ffffff;
+            --bg-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            background-image: var(--bg-image, none);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Actualizando estilos del logo para usar la nueva imagen */
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-image: url('logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .logo h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #dc2626;
+            border: 2px solid #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background: #dc2626;
+            color: #ffffff;
+            border: 2px solid #dc2626;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .races-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .race-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .race-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .race-card h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .race-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .race-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .race-info span {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .verification-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .verification-inputs input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .verification-inputs input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .user-info {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            display: none;
+            z-index: 1000;
+        }
+
+        .admin-panel {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .admin-badge {
+            background: #dc2626;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+        }
+
+        .classifications-table,
+        .registrations-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .classifications-table th,
+        .classifications-table td,
+        .registrations-table th,
+        .registrations-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .classifications-table th,
+        .registrations-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .classifications-table tr:hover,
+        .registrations-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .edit-btn {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .closed-registration {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .admin-config {
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .admin-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .admin-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .races-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-info {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    
+    <script>
+        let ADMIN_CONFIG = {
+            admins: [
+                { email: 'mrsmotorsportsmxb@gmail.com', password: 'Mxbikesespaña2k25', name: 'Administrador Principal', permanent: true }
+            ]
+        };
+
+        // Load saved admin config and merge with default
+        const savedAdminConfig = localStorage.getItem('adminConfig');
+        if (savedAdminConfig) {
+            const parsed = JSON.parse(savedAdminConfig);
+            // Always keep the permanent admin, add others from localStorage
+            const additionalAdmins = parsed.admins.filter(a => !a.permanent);
+            ADMIN_CONFIG.admins = ADMIN_CONFIG.admins.concat(additionalAdmins);
+        }
+
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+        let bannedUsers = JSON.parse(localStorage.getItem('bannedUsers')) || [];
+
+        // Variables CSS personalizables
+        const customColors = {
+            '--primary-color': '#dc2626',
+            '--primary-hover': '#b91c1c',
+            '--secondary-color': '#f59e0b',
+            '--text-color': '#1f2937',
+            '--text-secondary': '#6b7280',
+            '--bg-color': '#ffffff',
+            '--bg-image': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        };
+
+        // Aplicar colores personalizados
+        function applyCustomColors() {
+            const root = document.documentElement;
+            Object.entries(customColors).forEach(([property, value]) => {
+                root.style.setProperty(property, value);
+            });
+        }
+
+        // Aplicar colores al cargar la página
+        applyCustomColors();
+
+        let currentUser = null;
+
+        let classifications = JSON.parse(localStorage.getItem('classifications')) || {};
+
+        let registrations = {
+            'Campeonato de España': [],
+            'MX Autonomías': [],
+            'SX (Supercross)': [],
+            'Funrace': []
+        };
+
+        // Autonomías de España
+        const autonomias = [
+            'Andalucía', 'Aragón', 'Asturias', 'Baleares', 'Canarias', 'Cantabria',
+            'Castilla-La Mancha', 'Castilla y León', 'Cataluña', 'Ceuta', 'Extremadura',
+            'Galicia', 'La Rioja', 'Madrid', 'Melilla', 'Murcia', 'Navarra', 'País Vasco', 'Valencia'
+        ];
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        function openLoginModal() {
+            openModal('loginModal');
+            showLoginForm();
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('verificationForm').style.display = 'none';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('verificationForm').style.display = 'none';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const savePassword = document.getElementById('savePassword').checked;
+            
+            if (bannedUsers.includes(email)) {
+                alert('Tu cuenta ha sido suspendida. Contacta con el administrador.');
+                return;
+            }
+            
+            const admin = ADMIN_CONFIG.admins.find(a => a.email === email && a.password === password);
+            
+            if (admin) {
+                const adminData = {
+                    name: admin.name,
+                    email: email,
+                    guid: 'ADMIN' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                    isAdmin: true
+                };
+                if (savePassword) {
+                    localStorage.setItem('savedCredentials', JSON.stringify({email, password}));
+                }
+                loginUser(adminData);
+                return;
+            }
+            
+            const existingUser = registeredUsers.find(u => u.email === email && u.password === password);
+            if (!existingUser) {
+                alert('Email o contraseña incorrectos.');
+                return;
+            }
+            
+            const userData = {
+                name: existingUser.name,
+                email: email,
+                guid: existingUser.guid,
+                isAdmin: false
+            };
+            
+            if (savePassword) {
+                localStorage.setItem('savedCredentials', JSON.stringify({email, password}));
+            }
+            
+            loginUser(userData);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const savePassword = document.getElementById('savePasswordRegister').checked;
+            
+            if (registeredUsers.find(u => u.email === email)) {
+                alert('Ya existe una cuenta con este email.');
+                return;
+            }
+            
+            const newUser = {
+                name: name,
+                email: email,
+                password: password,
+                guid: 'USR' + Math.random().toString(36).substr(2, 6).toUpperCase()
+            };
+            
+            registeredUsers.push(newUser);
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+            
+            if (savePassword) {
+                localStorage.setItem('savedCredentials', JSON.stringify({email, password}));
+            }
+            
+            alert(`Cuenta creada exitosamente!\nGUID: ${newUser.guid}`);
+            
+            const userData = {
+                name: newUser.name,
+                email: email,
+                guid: newUser.guid,
+                isAdmin: false
+            };
+            
+            loginUser(userData);
+        }
+
+        function generateGUID() {
+            return 'MXB-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
+
+        function loginUser(userData) {
+            currentUser = userData;
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('userName').textContent = userData.name + (userData.isAdmin ? '' : '');
+            document.getElementById('userGuid').textContent = userData.guid;
+            
+            if (userData.isAdmin) {
+                document.getElementById('userName').innerHTML = userData.name + '<span class="admin-badge">ADMIN</span>';
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('adminConfig').style.display = 'block';
+                updateAdminPanel();
+                updateAdminConfig();
+                updateUserManagement();
+            }
+            
+            closeModal();
+            joinDiscord();
+            
+            alert(`¡Bienvenido ${userData.name}!\nGUID: ${userData.guid}\nTe estamos redirigiendo al Discord...`);
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('loginBtn').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('adminConfig').style.display = 'none';
+            alert('Sesión cerrada correctamente');
+        }
+
+        function joinDiscord() {
+            setTimeout(() => {
+                window.open('https://discord.gg/mxbikes-españa', '_blank');
+            }, 2000);
+        }
+
+        function openRaceModal(raceType) {
+            const closedRaces = JSON.parse(localStorage.getItem('closedRaces')) || [];
+            if (closedRaces.includes(raceType)) {
+                alert('Las inscripciones para esta carrera están cerradas.');
+                return;
+            }
+
+            if (!currentUser) {
+                alert('Debes iniciar sesión para inscribirte');
+                openLoginModal();
+                return;
+            }
+
+            document.getElementById('raceModalTitle').textContent = `Inscripción - ${raceType}`;
+            document.getElementById('selectedRace').value = raceType;
+            
+            const categorySelect = document.getElementById('pilotCategory');
+            categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>';
+            
+            if (raceType === 'Funrace') {
+                // Fun Race categories: 85, Eléctricas, 125, MX2, MXGP
+                categorySelect.innerHTML += `
+                    <option value="85">85cc</option>
+                    <option value="Eléctricas">Eléctricas</option>
+                    <option value="125">125cc</option>
+                    <option value="MX2">MX2</option>
+                    <option value="MXGP">MXGP</option>
+                `;
+            } else {
+                // Supercross, Campeonato de España, Autonomías: MXGP, MX2, MX Open
+                categorySelect.innerHTML += `
+                    <option value="MXGP">MXGP</option>
+                    <option value="MX2">MX2</option>
+                    <option value="MX Open">MX Open</option>
+                `;
+            }
+            
+            // Show autonomy selection only for MX Autonomías
+            const autonomyGroup = document.getElementById('autonomyGroup');
+            if (raceType === 'MX Autonomías') {
+                autonomyGroup.style.display = 'block';
+                populateAutonomySelect();
+            } else {
+                autonomyGroup.style.display = 'none';
+            }
+            
+            openModal('raceModal');
+        }
+
+        function populateAutonomySelect() {
+            const select = document.getElementById('pilotAutonomy');
+            select.innerHTML = '<option value="">Selecciona tu autonomía</option>';
+            autonomias.forEach(autonomia => {
+                const option = document.createElement('option');
+                option.value = autonomia;
+                option.textContent = autonomia;
+                select.appendChild(option);
+            });
+        }
+
+        function handleRaceRegistration(event) {
+            event.preventDefault();
+            
+            const raceType = document.getElementById('selectedRace').value;
+            const pilotName = document.getElementById('pilotName').value;
+            const pilotCategory = document.getElementById('pilotCategory').value;
+            const pilotAutonomy = document.getElementById('pilotAutonomy').value;
+            
+            if (raceType === 'MX Autonomías' && !pilotAutonomy) {
+                alert('Debes seleccionar tu autonomía para MX Autonomías');
+                return;
+            }
+            
+            const registration = {
+                id: Date.now(),
+                pilot: pilotName,
+                category: pilotCategory,
+                autonomy: raceType === 'MX Autonomías' ? pilotAutonomy : null,
+                guid: currentUser.guid,
+                registeredBy: currentUser.name
+            };
+            
+            if (!registrations[raceType]) {
+                registrations[raceType] = [];
+            }
+            
+            registrations[raceType].push(registration);
+            localStorage.setItem('registrations', JSON.stringify(registrations));
+            
+            alert(`¡Inscripción exitosa en ${raceType}!`);
+            closeModal();
+            updateRegistrationsDisplay();
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal();
+            }
+        });
+
+        function updateAdminPanel() {
+            const raceStatusList = document.getElementById('raceStatusList');
+            if (!raceStatusList) return;
+            
+            const closedRaces = JSON.parse(localStorage.getItem('closedRaces')) || [];
+            const races = ['Campeonato de España', 'MX Autonomías', 'SX (Supercross)', 'Funrace'];
+            
+            raceStatusList.innerHTML = '';
+            
+            races.forEach(race => {
+                const isClosed = closedRaces.includes(race);
+                const statusDiv = document.createElement('div');
+                statusDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; margin-bottom: 0.5rem; background: white; border-radius: 4px; border: 1px solid #e5e7eb;';
+                
+                statusDiv.innerHTML = `
+                    <span style="font-weight: 500;">${race}</span>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span style="color: ${isClosed ? '#dc2626' : '#059669'}; font-weight: 500;">
+                            ${isClosed ? 'CERRADAS' : 'ABIERTAS'}
+                        </span>
+                        <button onclick="toggleInscripciones('${race}')" 
+                                style="background: ${isClosed ? '#059669' : '#dc2626'}; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.875rem;">
+                            ${isClosed ? 'Abrir' : 'Cerrar'}
+                        </button>
+                    </div>
+                `;
+                
+                raceStatusList.appendChild(statusDiv);
+            });
+        }
+
+        function toggleInscripciones(raceType) {
+            const closedRaces = JSON.parse(localStorage.getItem('closedRaces')) || [];
+            const index = closedRaces.indexOf(raceType);
+            
+            if (index > -1) {
+                // Abrir inscripciones
+                closedRaces.splice(index, 1);
+                alert(`Inscripciones ABIERTAS para ${raceType}`);
+            } else {
+                // Cerrar inscripciones
+                closedRaces.push(raceType);
+                alert(`Inscripciones CERRADAS para ${raceType}`);
+            }
+            
+            localStorage.setItem('closedRaces', JSON.stringify(closedRaces));
+            updateAdminPanel();
+            updateRaceCards();
+        }
+
+        function updateRaceCards() {
+            const closedRaces = JSON.parse(localStorage.getItem('closedRaces')) || [];
+            const raceCards = document.querySelectorAll('.race-card');
+            
+            raceCards.forEach(card => {
+                const button = card.querySelector('button');
+                if (!button) return;
+                
+                const raceType = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                const isClosed = closedRaces.includes(raceType);
+                
+                if (isClosed) {
+                    button.style.background = '#6b7280';
+                    button.style.cursor = 'not-allowed';
+                    button.textContent = 'Inscripciones Cerradas';
+                } else {
+                    button.style.background = 'var(--primary-color)';
+                    button.style.cursor = 'pointer';
+                    button.textContent = 'Inscribirse Ahora';
+                }
+            });
+        }
+
+        function updateAdminConfig() {
+            const adminList = document.getElementById('adminList');
+            if (!adminList) return;
+            
+            adminList.innerHTML = '';
+            
+            ADMIN_CONFIG.admins.forEach(admin => {
+                const adminDiv = document.createElement('div');
+                adminDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; margin-bottom: 0.5rem; background: white; border-radius: 4px; border: 1px solid #e5e7eb;';
+                
+                adminDiv.innerHTML = `
+                    <div>
+                        <div style="font-weight: 500;">${admin.name}</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">${admin.email}</div>
+                        ${admin.permanent ? '<span style="font-size: 0.75rem; color: #059669; font-weight: 500;">PERMANENTE</span>' : ''}
+                    </div>
+                    ${!admin.permanent ? `<button onclick="removeAdmin('${admin.email}')" style="background: #dc2626; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Eliminar</button>` : ''}
+                `;
+                
+                adminList.appendChild(adminDiv);
+            });
+        }
+
+        function addAdmin() {
+            const name = document.getElementById('newAdminName').value;
+            const email = document.getElementById('newAdminEmail').value;
+            const password = document.getElementById('newAdminPassword').value;
+            
+            if (!name || !email || !password) {
+                alert('Todos los campos son obligatorios');
+                return;
+            }
+            
+            if (ADMIN_CONFIG.admins.find(a => a.email === email)) {
+                alert('Ya existe un administrador con este email');
+                return;
+            }
+            
+            const newAdmin = { name, email, password, permanent: false };
+            ADMIN_CONFIG.admins.push(newAdmin);
+            
+            // Save to localStorage (excluding permanent admin)
+            const adminsToSave = ADMIN_CONFIG.admins.filter(a => !a.permanent);
+            localStorage.setItem('adminConfig', JSON.stringify({ admins: adminsToSave }));
+            
+            // Clear form
+            document.getElementById('newAdminName').value = '';
+            document.getElementById('newAdminEmail').value = '';
+            document.getElementById('newAdminPassword').value = '';
+            
+            updateAdminConfig();
+            alert(`Administrador ${name} agregado exitosamente`);
+        }
+
+        function removeAdmin(email) {
+            if (confirm('¿Estás seguro de eliminar este administrador?')) {
+                ADMIN_CONFIG.admins = ADMIN_CONFIG.admins.filter(a => a.email !== email);
+                
+                // Save to localStorage
+                const adminsToSave = ADMIN_CONFIG.admins.filter(a => !a.permanent);
+                localStorage.setItem('adminConfig', JSON.stringify({ admins: adminsToSave }));
+                
+                updateAdminConfig();
+                alert('Administrador eliminado exitosamente');
+            }
+        }
+
+        function updateUserManagement() {
+            const userList = document.getElementById('userList');
+            if (!userList) return;
+            
+            userList.innerHTML = '';
+            
+            if (registeredUsers.length === 0) {
+                userList.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 1rem;">No hay usuarios registrados</p>';
+                return;
+            }
+            
+            registeredUsers.forEach(user => {
+                const isBanned = bannedUsers.includes(user.email);
+                const userDiv = document.createElement('div');
+                userDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; margin-bottom: 0.5rem; background: white; border-radius: 4px; border: 1px solid #e5e7eb;';
+                
+                userDiv.innerHTML = `
+                    <div>
+                        <div style="font-weight: 500;">${user.name}</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">${user.email} - GUID: ${user.guid}</div>
+                        ${isBanned ? '<span style="font-size: 0.75rem; color: #dc2626; font-weight: 500;">BANEADO</span>' : ''}
+                    </div>
+                    <button onclick="toggleUserBan('${user.email}')" 
+                            style="background: ${isBanned ? '#059669' : '#dc2626'}; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.875rem;">
+                        ${isBanned ? 'Desbanear' : 'Banear'}
+                    </button>
+                `;
+                
+                userList.appendChild(userDiv);
+            });
+        }
+
+        function toggleUserBan(email) {
+            const index = bannedUsers.indexOf(email);
+            
+            if (index > -1) {
+                bannedUsers.splice(index, 1);
+                alert('Usuario desbaneado exitosamente');
+            } else {
+                bannedUsers.push(email);
+                alert('Usuario baneado exitosamente');
+            }
+            
+            localStorage.setItem('bannedUsers', JSON.stringify(bannedUsers));
+            updateUserManagement();
+        }
+
+        function updateRegistrationsDisplay() {
+            // Esta función se puede implementar si necesitas mostrar las inscripciones
+        }
+
+        function updateClassificationsDisplay() {
+            // Esta función se puede implementar si necesitas mostrar las clasificaciones
+        }
+
+        window.addEventListener('load', function() {
+            // Load saved credentials
+            const savedCredentials = localStorage.getItem('savedCredentials');
+            if (savedCredentials) {
+                const { email, password } = JSON.parse(savedCredentials);
+                document.getElementById('loginEmail').value = email;
+                document.getElementById('loginPassword').value = password;
+                document.getElementById('savePassword').checked = true;
+            }
+            
+            // Load current user session
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                const userData = JSON.parse(savedUser);
+                loginUser(userData);
+            }
+            
+            // Load saved data
+            const savedRegistrations = localStorage.getItem('registrations');
+            if (savedRegistrations) {
+                registrations = JSON.parse(savedRegistrations);
+            }
+            
+            const savedClassifications = localStorage.getItem('classifications');
+            if (savedClassifications) {
+                classifications = JSON.parse(savedClassifications);
+            }
+            
+            // Update displays
+            updateRegistrationsDisplay();
+            updateClassificationsDisplay();
+            updateRaceCards();
+        });
+    </script>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <div>
+                        <h2>Comunidad Española MXBikes</h2>
+                        <p>Plataforma de Inscripción a Carreras</p>
+                    </div>
+                </div>
+                <nav>
+                    <a href="#inicio">Inicio</a>
+                    <a href="#carreras">Carreras</a>
+                    <a href="#contacto">Contacto</a>
+                    <button id="loginBtn" class="btn btn-primary" onclick="openLoginModal()">Iniciar Sesión</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="user-info" id="userInfo">
+        <h4 id="userName">Usuario</h4>
+        <p><strong>GUID:</strong> <span id="userGuid"></span></p>
+        <button onclick="logout()" class="btn" style="margin-top: 0.5rem; width: 100%;">Cerrar Sesión</button>
+    </div>
+
+    <div id="adminConfig" class="admin-config container" style="display: none;">
+        <h3 style="color: #0369a1;">⚙️ Configuración de Administradores</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+            <div>
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Administradores Actuales</h4>
+                <div id="adminList" class="admin-list"></div>
+            </div>
+            
+            <div>
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Agregar Nuevo Administrador</h4>
+                <div style="display: grid; gap: 1rem;">
+                    <input type="text" id="newAdminName" placeholder="Nombre completo" style="padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px;">
+                    <input type="email" id="newAdminEmail" placeholder="Email" style="padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px;">
+                    <input type="password" id="newAdminPassword" placeholder="Contraseña" style="padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px;">
+                    <button onclick="addAdmin()" style="background: var(--primary-color); color: white; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer;">
+                        Agregar Administrador
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <h4 style="color: var(--primary-color); margin-bottom: 1rem;">👥 Gestión de Usuarios</h4>
+            <div style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb;">
+                <div id="userList"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminPanel" class="admin-panel container">
+        <h3 style="color: #dc2626;">🔧 Panel de Administrador</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem;">
+            <div style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb;" class="classification-section">
+                <div style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Agregar Clasificación</h4>
+                    <div style="display: grid; gap: 1rem;">
+                        <select id="classificationRace" onchange="updateClassificationForm()" style="padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px;">
+                            <option value="">Seleccionar carrera</option>
+                            <option value="Campeonato de España">Campeonato de España</option>
+                            <option value="MX Autonomías">MX Autonomías</option>
+                            <option value="SX (Supercross)">SX (Supercross)</option>
+                            <option value="Funrace">Funrace</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb;">
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Estado de Inscripciones</h4>
+                <div id="raceStatusList"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h1>¡Únete a la Carrera!</h1>
+            <p>Inscríbete en los campeonatos de motocross más emocionantes de España. Compite con los mejores pilotos del país en la Comunidad Española MXBikes.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn" onclick="openLoginModal()">Crear Cuenta</a>
+                <a href="#carreras" class="btn btn-secondary">Ver Carreras</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="carreras">
+        <div class="container">
+            <h2>Categorías de Carreras</h2>
+            <div class="races-grid">
+                <div class="race-card">
+                    <h3>Campeonato de España</h3>
+                    <p>La competición más prestigiosa del país. Demuestra tu habilidad contra los mejores pilotos españoles en circuitos oficiales.</p>
+                    <div class="race-info">
+                        <span>🏁 Categorías: MXGP, MX2, MX Open</span>
+                    </div>
+                    <button class="btn" onclick="openRaceModal('Campeonato de España')">Inscribirse Ahora</button>
+                </div>
+                
+                <div class="race-card">
+                    <h3>MX Autonomías</h3>
+                    <p>Competiciones regionales por comunidades autónomas. Representa a tu región con orgullo y compite por el honor autonómico.</p>
+                    <div class="race-info">
+                        <span>🌍 Categorías: MXGP, MX2, MX Open</span>
+                    </div>
+                    <button class="btn" onclick="openRaceModal('MX Autonomías')">Inscribirse Ahora</button>
+                </div>
+                
+                <div class="race-card">
+                    <h3>SX (Supercross)</h3>
+                    <p>Adrenalina pura en circuitos cerrados. Saltos espectaculares, curvas cerradas y velocidad extrema en pistas técnicas.</p>
+                    <div class="race-info">
+                        <span>⚡ Categorías: MXGP, MX2, MX Open</span>
+                    </div>
+                    <button class="btn" onclick="openRaceModal('SX (Supercross)')">Inscribirse Ahora</button>
+                </div>
+                
+                <div class="race-card">
+                    <h3>Funrace</h3>
+                    <p>Carreras divertidas para todos los niveles. Perfectas para principiantes y veteranos que buscan diversión sin presión competitiva.</p>
+                    <div class="race-info">
+                        <span>🎉 Categorías: 85cc, Eléctricas, 125cc, MX2, MXGP</span>
+                    </div>
+                    <button class="btn" onclick="openRaceModal('Funrace')">Inscribirse Ahora</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="clasificaciones">
+        <div class="container">
+            <h2>Clasificaciones</h2>
+            <div id="classificationsDisplay">
+                <p style="text-align: center; color: #6b7280; font-style: italic;">No hay clasificaciones disponibles</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="inscripciones">
+        <div class="container">
+            <h2>Inscripciones Actuales</h2>
+            <div id="registrationsDisplay">
+                <p style="text-align: center; color: #6b7280; font-style: italic;">No hay inscripciones disponibles</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: var(--text-color); color: white; text-align: center; padding: 2rem 0;">
+        <div class="container">
+            <p>&copy; 2025 Comunidad Española MXBikes. Todos los derechos reservados.</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Únete a nuestro Discord para más información y actualizaciones</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="loginForm">
+                <h2>Iniciar Sesión</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña:</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="savePassword"> Recordar credenciales
+                        </label>
+                    </div>
+                    <button type="submit" class="btn">Iniciar Sesión</button>
+                    <p style="text-align: center; margin-top: 1rem;">
+                        <a href="#" onclick="showRegisterForm()" style="color: var(--primary-color);">¿No tienes cuenta? Regístrate</a>
+                    </p>
+                </form>
+            </div>
+            
+            <div id="registerForm" style="display: none;">
+                <h2>Crear Cuenta</h2>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="registerName">Nombre del Piloto:</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email:</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Contraseña:</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="savePasswordRegister"> Recordar credenciales
+                        </label>
+                    </div>
+                    <button type="submit" class="btn">Crear Cuenta</button>
+                    <p style="text-align: center; margin-top: 1rem;">
+                        <a href="#" onclick="showLoginForm()" style="color: var(--primary-color);">¿Ya tienes cuenta? Inicia sesión</a>
+                    </p>
+                </form>
+            </div>
+            
+            <div id="verificationForm" style="display: none;">
+                <h2>Verificación</h2>
+                <p>Ingresa el código de verificación:</p>
+                <div class="verification-inputs">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                </div>
+                <button class="btn">Verificar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Race Registration Modal -->
+    <div id="raceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="raceModalTitle">Inscripción a Carrera</h2>
+            <form onsubmit="handleRaceRegistration(event)">
+                <input type="hidden" id="selectedRace">
+                <div class="form-group">
+                    <label for="pilotName">Nombre del Piloto:</label>
+                    <input type="text" id="pilotName" required>
+                </div>
+                <div class="form-group">
+                    <label for="pilotCategory">Categoría:</label>
+                    <select id="pilotCategory" required>
+                        <option value="">Selecciona una categoría</option>
+                    </select>
+                </div>
+                <div class="form-group" id="autonomyGroup" style="display: none;">
+                    <label for="pilotAutonomy">Autonomía:</label>
+                    <select id="pilotAutonomy">
+                        <option value="">Selecciona tu autonomía</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Completar Inscripción</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
